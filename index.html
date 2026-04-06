@@ -374,22 +374,23 @@
         .card-img-wrapper {
             position: relative;
             overflow: hidden;
-            height: 520px;
-            border: none;
+            aspect-ratio: 3/4;
+            height: auto;
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            padding: 8px;
+            background-color: var(--black-pure);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .card-img-wrapper::after {
             content: '';
             position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(10,5,5,0.1), rgba(10,5,5,0.45));
-            transition: opacity 0.8s ease;
+            inset: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
             pointer-events: none;
-            z-index: 1;
-        }
-
-        .card:hover .card-img-wrapper::after {
-            opacity: 0;
+            z-index: 2;
         }
 
         .card-img {
@@ -397,12 +398,12 @@
             height: 100%;
             object-fit: cover;
             transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-            filter: brightness(0.85) saturate(0.9);
+            filter: grayscale(15%) brightness(0.85);
         }
 
         .card:hover .card-img {
-            transform: scale(1.05);
-            filter: brightness(1) saturate(1);
+            transform: scale(1.03);
+            filter: grayscale(0%) brightness(1);
         }
 
         .card-content {
@@ -416,19 +417,21 @@
         }
 
         .card-content h3 {
-            font-size: 2.2rem;
-            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
             color: var(--gold);
-            letter-spacing: 6px;
+            letter-spacing: 12px;
             text-transform: uppercase;
+            font-weight: 300;
         }
 
         .card-content p {
-            color: rgba(255, 253, 249, 0.75);
-            font-size: 1.15rem;
+            color: rgba(255, 253, 249, 0.6);
+            font-size: 0.95rem;
             margin: 0;
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
+            font-family: 'Lato', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 4px;
         }
 
         /* ----- About Section ----- */
@@ -633,6 +636,18 @@
                 font-size: clamp(1.2rem, 4vw, 1.6rem);
             }
 
+            .hero {
+                min-height: auto;
+                padding: 12rem 5% 10rem 5%;
+            }
+
+            .hero::before {
+                top: 1rem;
+                bottom: 1rem;
+                left: 1rem;
+                right: 1rem;
+            }
+
             section {
                 padding: 6rem 5%;
             }
@@ -644,16 +659,8 @@
                 right: 1rem;
             }
 
-            .card-img-wrapper {
-                height: 420px;
-            }
-
-            .card-img-wrapper::after {
-                opacity: 0;
-            }
-
             .card-img {
-                filter: brightness(1) saturate(1);
+                filter: grayscale(0%) brightness(1);
             }
 
             .about p {
