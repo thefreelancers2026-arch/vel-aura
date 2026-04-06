@@ -267,9 +267,9 @@
         }
 
         .hero h1 {
-            font-size: 9rem;
+            font-size: clamp(4rem, 10vw, 9rem);
             margin-bottom: 0.5rem;
-            letter-spacing: 20px;
+            letter-spacing: clamp(6px, 2vw, 20px);
             text-transform: uppercase;
             z-index: 1;
             position: relative;
@@ -350,8 +350,8 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 5rem 4rem;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+            gap: clamp(2rem, 5vw, 5rem) clamp(1.5rem, 4vw, 4rem);
         }
 
         .card {
@@ -538,46 +538,95 @@
             text-transform: uppercase;
         }
 
+        /* ----- Navigation Toggle ----- */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle .bar {
+            width: 30px;
+            height: 2px;
+            background-color: var(--gold);
+            transition: all 0.3s ease;
+        }
+
         /* ----- Responsive Design ----- */
         @media (max-width: 1200px) {
             .hero h1 {
                 font-size: 6rem;
                 letter-spacing: 12px;
             }
-
             .section-title {
                 font-size: 3.5rem;
             }
-
             .about p {
                 font-size: 1.8rem;
             }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 992px) {
             header {
-                flex-direction: column;
-                gap: 1.5rem;
-                padding: 1.5rem 5%;
-            }
-
-            nav {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 1.5rem;
+                padding: 1.2rem 5%;
+                flex-direction: row;
+                justify-content: space-between;
+                background-color: var(--bg-dark);
             }
 
             .logo {
-                font-size: 1.8rem;
+                font-size: clamp(1.4rem, 4vw, 1.6rem);
+                z-index: 1001;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .menu-toggle.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+            .menu-toggle.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            .menu-toggle.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background-color: rgba(10,5,5,0.98);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 3rem;
+                transform: translateY(-100%);
+                transition: transform 0.5s cubic-bezier(0.8, 0, 0.2, 1);
+                z-index: 1000;
+            }
+
+            nav.active {
+                transform: translateY(0);
+            }
+
+            nav a {
+                font-size: 1.5rem;
+                letter-spacing: 5px;
             }
 
             .hero h1 {
-                font-size: 4rem;
-                letter-spacing: 8px;
+                font-size: clamp(3rem, 12vw, 5rem);
+                letter-spacing: clamp(4px, 1.5vw, 8px);
             }
 
             .hero p {
-                font-size: 1.6rem;
+                font-size: clamp(1.2rem, 4vw, 1.6rem);
             }
 
             section {
@@ -607,12 +656,13 @@
 
         @media (max-width: 480px) {
             .hero h1 {
-                font-size: 3rem;
-                letter-spacing: 6px;
+                font-size: 2.8rem;
+                letter-spacing: 5px;
             }
 
             .grid {
-                gap: 3rem;
+                grid-template-columns: 1fr;
+                gap: 4rem;
             }
 
             .contact-info {
@@ -620,11 +670,16 @@
             }
 
             .logo {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
             }
 
             .section-title {
                 font-size: 2.2rem;
+                letter-spacing: 4px;
+            }
+
+            .card-img-wrapper {
+                height: 380px;
             }
         }
     </style>
@@ -635,11 +690,16 @@
     <!-- Minimal White Header -->
     <header class="reveal">
         <div class="logo">VEL AURA</div>
-        <nav>
-            <a href="#hero">Home</a>
-            <a href="#products">Collection</a>
-            <a href="#about">The Maison</a>
-            <a href="#contact">Contact</a>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+        <nav id="nav-menu">
+            <a href="#hero" onclick="toggleMenu()">Home</a>
+            <a href="#products" onclick="toggleMenu()">Collection</a>
+            <a href="#about" onclick="toggleMenu()">The Maison</a>
+            <a href="#contact" onclick="toggleMenu()">Contact</a>
         </nav>
     </header>
 
@@ -784,8 +844,15 @@
         <p>&copy; 2026 VEL AURA. All rights reserved.</p>
     </footer>
 
-    <!-- Scroll Reveal Script -->
+    <!-- Scripts -->
     <script>
+        function toggleMenu() {
+            if (window.innerWidth <= 992) {
+                document.getElementById("nav-menu").classList.toggle("active");
+                document.querySelector(".menu-toggle").classList.toggle("active");
+            }
+        }
+
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
