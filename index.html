@@ -28,6 +28,7 @@
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 100px;
         }
 
         body {
@@ -156,13 +157,15 @@
 
         /* ----- Buttons ----- */
         .btn {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             background: transparent;
             color: var(--gold);
-            padding: 1.2rem 3.5rem;
+            padding: clamp(1rem, 3vw, 1.2rem) clamp(2.5rem, 5vw, 3.5rem);
             text-decoration: none;
             font-family: 'Lato', sans-serif;
-            font-weight: 400;
+            font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 4px;
             border: 1px solid var(--gold);
@@ -489,10 +492,11 @@
             border: 1px solid var(--gold);
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 15px;
             font-family: 'Lato', sans-serif;
-            font-weight: 400;
-            padding: 1.2rem 3.5rem;
+            font-weight: 500;
+            padding: clamp(1rem, 3vw, 1.2rem) clamp(2rem, 5vw, 3.5rem);
             text-decoration: none;
             text-transform: uppercase;
             letter-spacing: 3px;
@@ -642,6 +646,14 @@
 
             .card-img-wrapper {
                 height: 420px;
+            }
+
+            .card-img-wrapper::after {
+                opacity: 0;
+            }
+
+            .card-img {
+                filter: brightness(1) saturate(1);
             }
 
             .about p {
@@ -841,6 +853,7 @@
 
     <!-- Footer -->
     <footer class="reveal">
+        <h2 class="logo" style="font-size: 2rem; margin-bottom: 2rem; letter-spacing: 12px;">VEL AURA</h2>
         <p>&copy; 2026 VEL AURA. All rights reserved.</p>
     </footer>
 
